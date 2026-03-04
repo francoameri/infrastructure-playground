@@ -1,10 +1,4 @@
 ```plaintext
-SW2#show running config
-                 ^
-% Invalid input detected at '^' marker.
-	
-SW2#show running 
-SW2#show running
 SW2#show running-config 
 Building configuration...
 
