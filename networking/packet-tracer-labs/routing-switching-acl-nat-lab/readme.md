@@ -12,7 +12,7 @@ A small, reproducible **Packet Tracer lab** showcasing:
 
 ### 🚀 Quickstart  
 1. ⬇️ Download and open `pkt/topology.pkt` with Cisco Packet Tracer (recommended: v8.x).  
-   👉 If you don’t have Packet Tracer installed, see [Getting Packet Tracer Guide](networking/packet-tracer-labs/docs/getting-packet-tracer.md)
+   👉 If you don’t have Packet Tracer installed, see [Getting Packet Tracer Guide](../docs/getting-packet-tracer.md).
 2. 📖 Follow the steps in `docs/lab-instructions.md` to run verification commands and tests.  
 
 ---
