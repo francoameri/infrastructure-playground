@@ -138,3 +138,18 @@ This static NAT entry ensures the internal webserver is reachable from the outsi
 - Configure static NAT for internal webserver publishing
 - Observe OSPF adjacencies across distribution and border
 - Test static routing toward multiple ISPs with redundancy
+
+## 📂 Device Configurations
+
+Full sanitized configs for each device are available in the [configs folder](./configs/).
+
+- [SW1](./configs/SW1.md)
+- [SW2](./configs/SW2.md)
+- [BORDER Router](./configs/BORDER.md)
+- [L3SW1](./configs/L3SW1.md)
+- [L3SW2](./configs/L3SW2.md)
+- [ISP1](./configs/ISP1.md)
+- [ISP2](./configs/ISP2.md)
+- [Google Server](./configs/GOOGLE.md)
+
+Each file contains the output of `show running-config` plus role notes (interfaces, routing, ACLs, NAT, etc.). Use these configs to reproduce the lab or compare against your own Packet Tracer setup.
