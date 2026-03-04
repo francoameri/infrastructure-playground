@@ -12,10 +12,37 @@ A reproducible **Cisco Packet Tracer lab** showcasing real-world enterprise edge
 
 ---
 
+## 🧭 Who Is This Lab For?
+- Students preparing for CCNA/CCNP exams
+- IT professionals practicing enterprise edge concepts
+- Recruiters/peers evaluating reproducible documentation
+
+---
+
 ## 🚀 Quickstart
 1. ⬇️ Download and open `pkt/topology.pkt` with Cisco Packet Tracer (recommended: v8.x).  
    👉 If you don’t have Packet Tracer installed, see [Getting Packet Tracer Guide](../docs/getting-packet-tracer.md).
 2. 📖 Follow the steps in `docs/lab-instructions.md` to run verification commands and tests.
+
+---
+
+## 🧩 How to Use This Lab
+Follow this guided workflow to experience the design in action:
+- Start in VLAN 100 (Office):
+- From a host in 192.168.100.0/24, try to reach the Google server (10.0.0.2).
+- Observe that traffic is blocked by ACLs until NAT is applied.
+- Test NAT Publishing:
+- Access the Office Webserver at its public IP 172.0.0.2.
+- Verify translation with show ip nat translations on the BORDER router.
+- Check OSPF Adjacencies:
+- Run show ip ospf neighbor on L3SW1/L3SW2 to confirm adjacency with BORDER.
+- Use show ip route to see VLAN networks redistributed into OSPF.
+- Simulate ISP Redundancy:
+- Shut down one ISP2 link (e.g., shutdown on 172.0.0.4/30).
+- Run traceroute 10.0.0.2 to confirm traffic reroutes via the second ISP2 path.
+- Verify EtherChannel Resilience:
+- Disable one physical link (Fa0/1 or Fa0/2) between L3SW1 and L3SW2.
+- Run show etherchannel summary to confirm the Port‑Channel remains active.
 
 ---
 
@@ -96,6 +123,15 @@ This static NAT entry ensures the internal webserver is reachable from the outsi
 - traceroute 10.0.0.2 → verify static route path via ISP2.
 - show spanning-tree → confirm VLAN trunk stability
 ```
+
+---
+
+## 🔍 Troubleshooting Tips
+- Use `show ip nat translations` to confirm webserver mapping
+- Shut down Fa0/1 on L3SW2 and run `ping` to test EtherChannel redundancy
+- Clear NAT with `clear ip nat translations *` and retest connectivity
+
+---
 
 ## 🎯 Learning Outcomes
 - Practice edge ACL design to block RFC1918 leakage
