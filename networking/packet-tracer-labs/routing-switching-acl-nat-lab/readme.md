@@ -12,6 +12,7 @@ A small, reproducible **Packet Tracer lab** showcasing:
 
 ### 🚀 Quickstart  
 1. ⬇️ Download and open `pkt/topology.pkt` with Cisco Packet Tracer (recommended: v8.x).  
+   👉 If you don’t have Packet Tracer installed, see `docs/getting-packet-tracer.md`.  
 2. 📖 Follow the steps in `docs/lab-instructions.md` to run verification commands and tests.  
 
 ---
@@ -26,11 +27,3 @@ A small, reproducible **Packet Tracer lab** showcasing:
 - 🖥️ From a PC host, run `ping` to another host in the same VLAN → expected: successful replies.  
 - 🔍 On the switch CLI, run `show vlan brief` and `show interface trunk` → confirm VLAN assignments and trunking.  
 - 📡 On the WLC/AP console, verify SSID assignment and client association.  
-
----
-
-### 📬 Contact  
-Franco Ameri Sbraccia  
-- 🌐 [GitHub](https://github.com/francoameri)  
-- 💼 [LinkedIn](https://linkedin.com/in/fameri)  
-- ✉️ famerisbraccia@gmail.com  
