@@ -29,76 +29,60 @@ A reproducible **Cisco Packet Tracer lab** showcasing real-world enterprise edge
 - **BORDER ↔ SP2:** 172.0.0.12/30
 - **Google Server:** 10.0.0.0/30
 
+```plaintext
+
+[Admini VLAN 200]---L3SW1---\
+                             BORDER---ISP1---Google---ServerPT
+[Office VLAN 100]---L3SW2---/        \                 /
+                                   ISP2---Google-------
+```
+
 ---
 
 ## ⚙️ Config Highlights
 
 ### OSPF (Internal)
 ```plaintext
-router ospf 10
- network 100.100.0.0 0.0.0.3 area 0
- network 100.200.0.0 0.0.0.3 area 0
- default-information originate
+- OSPF runs between L3SW1, L3SW2, BORDER.
+- VLAN networks (A & B) are redistributed into OSPF.
+- BORDER originates default route toward ISPs.
 ```
 
 ### Static Routing (Edge to ISPs/Google)
 ```plaintext
-ip route 0.0.0.0 0.0.0.0 172.0.0.1   ! toward ISP1
-ip route 10.0.0.0 255.255.255.252 172.0.0.6   ! toward Google via ISP2
-ip route 172.0.0.12 255.255.255.252 172.0.0.14 ! toward SP2
+- Purpose: Simulates redundant ISP2 paths toward Google.
+- Design: Static routes point to next‑hop addresses for load‑sharing or failover testing.
 ```
 
 ### ACLs (Border Router)
 ```plaintext
-access-list 100 deny ip 192.168.100.0 0.0.0.255 any
-access-list 100 deny ip 100.100.0.0 0.0.0.3 any
-access-list 100 permit ip any any
-interface g0/0
- ip access-group 100 out
-
-access-list 200 deny ip 192.168.200.0 0.0.0.255 any
-access-list 200 deny ip 100.200.0.0 0.0.0.3 any
-access-list 200 permit ip any any
-interface g0/1
- ip access-group 200 out
+• 	ACL 100 (G0/0): Blocks Office VLAN (192.168.100.0/24) and transit link (100.100.0.0/30) from leaking out.
+• 	ACL 200 (G0/1): Blocks Administration VLAN (192.168.200.0/24) and transit link (100.200.0.0/30).
+• 	Policy Goal: Prevent internal addressing from being routed externally, while still allowing NAT‑translated traffic
 ```
 
 ### NAT (Static)
 ```plaintext
-ip nat inside source static 192.168.100.10 172.0.0.2
-ip nat inside source static 192.168.200.20 172.0.0.10
-
-interface g0/0
- ip nat inside
-interface s0/0/0
- ip nat outside
-
-interface g0/1
- ip nat inside
-interface s0/0/1
- ip nat outside
+- Inside Local: 192.168.100.10 (Office Webserver in VLAN 100)
+- Inside Global: 172.0.0.2 (Public IP advertised to ISPs)
+This static NAT entry ensures the internal webserver is reachable from the outside world using its public IP.
 ```
 
 ### VLANs & Trunking
 ```plaintext
-vlan 100
- name Office
-vlan 200
- name Administration
-
-interface range g0/1 - 2
- switchport mode trunk
- switchport trunk allowed vlan 100,200
+- OSPF runs between L3SW1, L3SW2, BORDER.
+- VLAN networks (A & B) are redistributed into OSPF.
+- BORDER originates default route toward ISPs.
 ```
 
 ### EtherChannel (LACP)
 ```plaintext
-interface range g0/3 - 4
- channel-group 1 mode active
-!
-interface port-channel 1
- switchport mode trunk
- switchport trunk allowed vlan 100,200
+- Combines multiple physical links (Fa0/1, Fa0/2) into a single logical Port‑Channel.
+- Provides higher aggregate bandwidth between distribution switches.
+- Ensures redundancy — if one link fails, traffic continues over the remaining link(s).
+- Acts as the trunk backbone carrying VLAN 100 (Office) and VLAN 200 (Administration) between L3SW1 and L3SW2.
+- Improves stability and throughput for inter‑VLAN routing and OSPF adjacency.
+- Simplifies management: the two physical interfaces are treated as one logical interface (Po1).
 ```
 
 🧪 Verification Commands
@@ -108,4 +92,13 @@ interface port-channel 1
 - show ip route → check static + OSPF routes
 - show access-lists → confirm ACL hits
 - show etherchannel summary → verify LACP bundle
+- show ip nat translations → confirm NAT mappings.
+- traceroute 10.0.0.2 → verify static route path via ISP2.
+- show spanning-tree → confirm VLAN trunk stability
 ```
+
+## 🎯 Learning Outcomes
+- Practice edge ACL design to block RFC1918 leakage
+- Configure static NAT for internal webserver publishing
+- Observe OSPF adjacencies across distribution and border
+- Test static routing toward multiple ISPs with redundancy
