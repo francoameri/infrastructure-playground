@@ -5,7 +5,7 @@ A reproducible **Cisco Packet Tracer lab** showcasing real-world enterprise edge
 - 🖧 **VLAN segmentation** (Office & Administration) with trunking
 - 🛣️ **OSPF dynamic routing** inside the LAN (L3SW1, L3SW2, BORDER)
 - 📡 **Static routing** toward ISP1, ISP2, Google, SP2
-- 🔒 **ACLs** applied at the BORDER to enforce policy
+- 🔒 **ACLs** applied at the BORDER to enforce access policy
 - 🌐 **NAT** translating internal servers to public IPs
 - ⚙️ **EtherChannel (LACP)** between distribution switches
 - 🗂️ **Sanitized configs & outputs** so you can reproduce the exercises locally
