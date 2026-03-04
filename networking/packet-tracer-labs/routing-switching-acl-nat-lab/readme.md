@@ -47,6 +47,9 @@ Follow this guided workflow to experience the design in action:
 ---
 
 ## 🗺️ Topology & Networks
+
+![PKTTopology](./images/Preview.png)
+
 - **Network A (Office):** 192.168.100.0/24 (VLAN 100)
 - **Network B (Administration):** 192.168.200.0/24 (VLAN 200)
 - **L3SW2 ↔ BORDER:** 100.100.0.0/30
