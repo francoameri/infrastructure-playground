@@ -45,7 +45,12 @@ Infrastructure Playground is more than just a lab repo — it’s a growing know
 ---
 
 ## 🤝 Contributions
-This repo is a personal learning playground, but contributions, suggestions, and discussions are welcome. Feel free to fork, adapt, and share improvements.
+This repository is personal and experience-driven, but feedback and ideas are welcome.
+If you’ve faced similar challenges, feel free to share your approach or suggest improvements.
+
+    💼 LinkedIn
+    🌐 GitHub
+    ✉️ famerisbraccia@gmail.com
 
 ---
 
