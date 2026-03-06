@@ -48,9 +48,9 @@ Infrastructure Playground is more than just a lab repo — it’s a growing know
 This repository is personal and experience-driven, but feedback and ideas are welcome.
 If you’ve faced similar challenges, feel free to share your approach or suggest improvements.
 
-    💼 LinkedIn
-    🌐 GitHub
-    ✉️ famerisbraccia@gmail.com
+- 💼 [LinkedIn](https://linkedin.com/in/fameri)  
+- 🌐 [GitHub](https://github.com/francoameri)  
+- ✉️ famerisbraccia@gmail.com
 
 ---
 
