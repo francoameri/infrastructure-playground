@@ -1,3 +1,9 @@
+# 📊 Executive Summary
+This lab demonstrates **enterprise edge design** with redundancy, segmentation, and policy enforcement.  
+It highlights my ability to **design, document, and reproduce complex networks** using Cisco Packet Tracer, making it valuable for technicians, students, and recruiters alike.
+
+---
+
 # 🧩 Enterprise Network Playground
 
 A reproducible **Cisco Packet Tracer lab** showcasing real-world enterprise edge design:
@@ -23,6 +29,8 @@ A reproducible **Cisco Packet Tracer lab** showcasing real-world enterprise edge
 1. ⬇️ Download and open `pkt/topology.pkt` with Cisco Packet Tracer (recommended: v8.x).  
    👉 If you don’t have Packet Tracer installed, see [Getting Packet Tracer Guide](../docs/getting-packet-tracer.md).
 2. 📖 Follow the steps in `docs/lab-instructions.md` to run verification commands and tests.
+
+> ✅ Skills demonstrated: VLAN segmentation, dynamic routing (OSPF), static edge routing, ACL policy enforcement, NAT publishing, EtherChannel redundancy, and reproducible documentation.
 
 ---
 
@@ -134,6 +142,12 @@ This static NAT entry ensures the internal webserver is reachable from the outsi
 - Shut down Fa0/1 on L3SW2 and run `ping` to test EtherChannel redundancy
 - Clear NAT with `clear ip nat translations *` and retest connectivity
 
+## 🛠️ Common Misconfigurations & Fixes
+- OSPF adjacency fails → check network statements and interface IPs.
+- EtherChannel down → confirm both sides use LACP mode and matching configs.
+- NAT not translating → verify ACLs permit traffic and inside/outside interfaces are set correctly.
+- ACL blocking too much → adjust sequence numbers and confirm applied direction.
+
 ---
 
 ## 🎯 Learning Outcomes
@@ -141,6 +155,10 @@ This static NAT entry ensures the internal webserver is reachable from the outsi
 - Configure static NAT for internal webserver publishing
 - Observe OSPF adjacencies across distribution and border
 - Test static routing toward multiple ISPs with redundancy
+
+> 🎯 Transferable Skills: This lab demonstrates my ability to **design resilient enterprise networks, enforce edge security, and document reproducible labs** — directly applicable to infrastructure engineering and architect roles.
+
+---
 
 ## 📂 Device Configurations
 
@@ -156,3 +174,16 @@ Full sanitized configs for each device are available in the [configs folder](./c
 - [Google Server](./configs/GOOGLE.md)
 
 Each file contains the output of `show running-config` plus role notes (interfaces, routing, ACLs, NAT, etc.). Use these configs to reproduce the lab or compare against your own Packet Tracer setup.
+
+---
+
+## 📢 About This Lab
+This enterprise edge lab is part of my **Infrastructure Improvement Portfolio**, showcasing reproducible, real-world scenarios.  
+It is intended for technicians practicing advanced concepts, students preparing for CCNA/CCNP, and recruiters evaluating **architect-level design and documentation skills**.  
+By combining VLAN segmentation, OSPF, ACLs, NAT, and EtherChannel, this lab demonstrates how to build **resilient, scalable, and secure enterprise networks**.
+
+---
+
+## 🔑 Keywords
+
+> Cisco Packet Tracer, VLAN Segmentation, OSPF Dynamic Routing, Static Routing, Access Control Lists (ACLs), Network Address Translation (NAT), EtherChannel (LACP), Enterprise Edge Design, ISP Redundancy, Network Troubleshooting, CCNA/CCNP Lab Practice, Reproducible Configurations, Infrastructure Documentation, Scalable Network Architecture
