@@ -55,4 +55,14 @@ If you’ve faced similar challenges, feel free to share your approach or sugges
 ---
 
 ## 📝 License
-This repository is shared for educational purposes. Please respect usage guidelines and credit appropriately when reusing content.
+
+All content in this repository is shared under the **Creative Commons Attribution 4.0 International License (CC BY 4.0)**.
+
+You are free to:
+- **Share** — copy and redistribute the material in any medium or format
+- **Adapt** — remix, transform, and build upon the material for any purpose, even commercially
+
+Under the following terms:
+- **Attribution** — Please give appropriate credit to **Franco [francoameri]** as the original author, provide a link to this repository, and indicate if changes were made.
+
+🔗 Full license text: [LICENSE.md](https://github.com/francoameri/francoameri/blob/main/LICENSE.md)

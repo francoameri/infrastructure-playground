@@ -16,12 +16,33 @@ A reproducible **Cisco Packet Tracer lab** showcasing real-world enterprise edge
 - ⚙️ **EtherChannel (LACP)** between distribution switches
 - 🗂️ **Sanitized configs & outputs** so you can reproduce the exercises locally
 
+<div align="right"><a href="#-table-of-contents">↑ Back to top</a></div>
+
+---
+
+## 📑 Table of Contents
+- [Who Is This Lab For?](#-who-is-this-lab-for)
+- [Quickstart](#-quickstart)
+- [How to Use This Lab](#-how-to-use-this-lab)
+- [Topology & Networks](#️-topology--networks)
+- [Config Highlights](#️-config-highlights)
+- [Troubleshooting Tips](#-troubleshooting-tips)
+- [Common Misconfigurations & Fixes](#️-common-misconfigurations--fixes)
+- [Learning Outcomes](#-learning-outcomes)
+- [Device Configurations](#-device-configurations)
+- [About This Lab](#-about-this-lab)
+- [Keywords](#-keywords)
+
+<div align="right"><a href="#-table-of-contents">↑ Back to top</a></div>
+
 ---
 
 ## 🧭 Who Is This Lab For?
 - Students preparing for CCNA/CCNP exams
 - IT professionals practicing enterprise edge concepts
 - Recruiters/peers evaluating reproducible documentation
+
+<div align="right"><a href="#-table-of-contents">↑ Back to top</a></div>
 
 ---
 
@@ -31,6 +52,8 @@ A reproducible **Cisco Packet Tracer lab** showcasing real-world enterprise edge
 2. 📖 Follow the steps in `docs/lab-instructions.md` to run verification commands and tests.
 
 > ✅ Skills demonstrated: VLAN segmentation, dynamic routing (OSPF), static edge routing, ACL policy enforcement, NAT publishing, EtherChannel redundancy, and reproducible documentation.
+
+<div align="right"><a href="#-table-of-contents">↑ Back to top</a></div>
 
 ---
 
@@ -51,6 +74,8 @@ Follow this guided workflow to experience the design in action:
 - Verify EtherChannel Resilience:
 - Disable one physical link (Fa0/1 or Fa0/2) between L3SW1 and L3SW2.
 - Run show etherchannel summary to confirm the Port‑Channel remains active.
+
+<div align="right"><a href="#-table-of-contents">↑ Back to top</a></div>
 
 ---
 
@@ -75,53 +100,44 @@ Follow this guided workflow to experience the design in action:
                                    ISP2---Google-------
 ```
 
+<div align="right"><a href="#-table-of-contents">↑ Back to top</a></div>
+
 ---
 
 ## ⚙️ Config Highlights
 
 ### OSPF (Internal)
-```plaintext
 - OSPF runs between L3SW1, L3SW2, BORDER.
 - VLAN networks (A & B) are redistributed into OSPF.
 - BORDER originates default route toward ISPs.
-```
 
 ### Static Routing (Edge to ISPs/Google)
-```plaintext
-- Purpose: Simulates redundant ISP2 paths toward Google.
-- Design: Static routes point to next‑hop addresses for load‑sharing or failover testing.
-```
+- **Purpose:** Simulates redundant ISP2 paths toward Google.
+- **Design:** Static routes point to next‑hop addresses for load‑sharing or failover testing.
 
 ### ACLs (Border Router)
-```plaintext
-• 	ACL 100 (G0/0): Blocks Office VLAN (192.168.100.0/24) and transit link (100.100.0.0/30) from leaking out.
-• 	ACL 200 (G0/1): Blocks Administration VLAN (192.168.200.0/24) and transit link (100.200.0.0/30).
-• 	Policy Goal: Prevent internal addressing from being routed externally, while still allowing NAT‑translated traffic
-```
+- **ACL 100 (G0/0):** Blocks Office VLAN (192.168.100.0/24) and transit link (100.100.0.0/30) from leaking out.
+- **ACL 200 (G0/1):** Blocks Administration VLAN (192.168.200.0/24) and transit link (100.200.0.0/30).
+- **Policy Goal:** Prevent internal addressing from being routed externally, while still allowing NAT‑translated traffic.
 
 ### NAT (Static)
-```plaintext
-- Inside Local: 192.168.100.10 (Office Webserver in VLAN 100)
-- Inside Global: 172.0.0.2 (Public IP advertised to ISPs)
+- **Inside Local:** 192.168.100.10 (Office Webserver in VLAN 100)
+- **Inside Global:** 172.0.0.2 (Public IP advertised to ISPs)
+
 This static NAT entry ensures the internal webserver is reachable from the outside world using its public IP.
-```
 
 ### VLANs & Trunking
-```plaintext
 - OSPF runs between L3SW1, L3SW2, BORDER.
 - VLAN networks (A & B) are redistributed into OSPF.
 - BORDER originates default route toward ISPs.
-```
 
 ### EtherChannel (LACP)
-```plaintext
 - Combines multiple physical links (Fa0/1, Fa0/2) into a single logical Port‑Channel.
 - Provides higher aggregate bandwidth between distribution switches.
 - Ensures redundancy — if one link fails, traffic continues over the remaining link(s).
 - Acts as the trunk backbone carrying VLAN 100 (Office) and VLAN 200 (Administration) between L3SW1 and L3SW2.
 - Improves stability and throughput for inter‑VLAN routing and OSPF adjacency.
 - Simplifies management: the two physical interfaces are treated as one logical interface (Po1).
-```
 
 🧪 Verification Commands
 ```
@@ -135,6 +151,8 @@ This static NAT entry ensures the internal webserver is reachable from the outsi
 - show spanning-tree → confirm VLAN trunk stability
 ```
 
+<div align="right"><a href="#-table-of-contents">↑ Back to top</a></div>
+
 ---
 
 ## 🔍 Troubleshooting Tips
@@ -142,11 +160,17 @@ This static NAT entry ensures the internal webserver is reachable from the outsi
 - Shut down Fa0/1 on L3SW2 and run `ping` to test EtherChannel redundancy
 - Clear NAT with `clear ip nat translations *` and retest connectivity
 
+<div align="right"><a href="#-table-of-contents">↑ Back to top</a></div>
+
+---
+
 ## 🛠️ Common Misconfigurations & Fixes
 - OSPF adjacency fails → check network statements and interface IPs.
 - EtherChannel down → confirm both sides use LACP mode and matching configs.
 - NAT not translating → verify ACLs permit traffic and inside/outside interfaces are set correctly.
 - ACL blocking too much → adjust sequence numbers and confirm applied direction.
+
+<div align="right"><a href="#-table-of-contents">↑ Back to top</a></div>
 
 ---
 
@@ -158,22 +182,26 @@ This static NAT entry ensures the internal webserver is reachable from the outsi
 
 > 🎯 Transferable Skills: This lab demonstrates my ability to **design resilient enterprise networks, enforce edge security, and document reproducible labs** — directly applicable to infrastructure engineering and architect roles.
 
+<div align="right"><a href="#-table-of-contents">↑ Back to top</a></div>
+
 ---
 
 ## 📂 Device Configurations
 
 Full sanitized configs for each device are available in the [configs folder](./configs/).
 
-- [SW1](./configs/SW1.md)
-- [SW2](./configs/SW2.md)
-- [BORDER Router](./configs/BORDER.md)
-- [L3SW1](./configs/L3SW1.md)
-- [L3SW2](./configs/L3SW2.md)
-- [ISP1](./configs/ISP1.md)
-- [ISP2](./configs/ISP2.md)
-- [Google Server](./configs/GOOGLE.md)
+- [SW1](./configs/SW1.cfg)
+- [SW2](./configs/SW2.cfg)
+- [BORDER Router](./configs/BORDER.cfg)
+- [L3SW1](./configs/L3SW1.cfg)
+- [L3SW2](./configs/L3SW2.cfg)
+- [ISP1](./configs/ISP1.cfg)
+- [ISP2](./configs/ISP2.cfg)
+- [Google Server](./configs/GOOGLE.cfg)
 
 Each file contains the output of `show running-config` plus role notes (interfaces, routing, ACLs, NAT, etc.). Use these configs to reproduce the lab or compare against your own Packet Tracer setup.
+
+<div align="right"><a href="#-table-of-contents">↑ Back to top</a></div>
 
 ---
 
@@ -182,8 +210,18 @@ This enterprise edge lab is part of my **Infrastructure Improvement Portfolio**,
 It is intended for technicians practicing advanced concepts, students preparing for CCNA/CCNP, and recruiters evaluating **architect-level design and documentation skills**.  
 By combining VLAN segmentation, OSPF, ACLs, NAT, and EtherChannel, this lab demonstrates how to build **resilient, scalable, and secure enterprise networks**.
 
+<div align="right"><a href="#-table-of-contents">↑ Back to top</a></div>
+
 ---
 
 ## 🔑 Keywords
 
 > Cisco Packet Tracer, VLAN Segmentation, OSPF Dynamic Routing, Static Routing, Access Control Lists (ACLs), Network Address Translation (NAT), EtherChannel (LACP), Enterprise Edge Design, ISP Redundancy, Network Troubleshooting, CCNA/CCNP Lab Practice, Reproducible Configurations, Infrastructure Documentation, Scalable Network Architecture
+
+<div align="right"><a href="#-table-of-contents">↑ Back to top</a></div>
+
+---
+
+✍️ Authored by **Franco [francoameri]**
+📜 Licensed under [CC BY 4.0](https://github.com/francoameri/francoameri/blob/main/LICENSE.md)
+Please credit the original author when sharing or adapting this work.

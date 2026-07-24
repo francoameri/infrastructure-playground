@@ -62,3 +62,9 @@ I’ll be glad to help troubleshoot or point you in the right direction.
 ## 🔑 Keywords
 
 > Cisco Packet Tracer, CCNA Practice, CCNP Lab, Network Simulation, VLAN, OSPF, ACL, NAT, EtherChannel, Enterprise Edge Design, Infrastructure Training, Reproducible Labs
+
+---
+
+✍️ Authored by **Franco [francoameri]**
+📜 Licensed under [CC BY 4.0](https://github.com/francoameri/francoameri/blob/main/LICENSE.md)
+Please credit the original author when sharing or adapting this work.
