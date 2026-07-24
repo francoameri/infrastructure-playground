@@ -30,6 +30,7 @@ A reproducible **Cisco Packet Tracer lab** showcasing real-world enterprise edge
 - [Common Misconfigurations & Fixes](#️-common-misconfigurations--fixes)
 - [Learning Outcomes](#-learning-outcomes)
 - [Device Configurations](#-device-configurations)
+- [Automated Verification](#-automated-verification)
 - [About This Lab](#-about-this-lab)
 - [Keywords](#-keywords)
 
@@ -200,6 +201,22 @@ Full sanitized configs for each device are available in the [configs folder](./c
 - [Google Server](./configs/GOOGLE.cfg)
 
 Each file contains the output of `show running-config` plus role notes (interfaces, routing, ACLs, NAT, etc.). Use these configs to reproduce the lab or compare against your own Packet Tracer setup.
+
+<div align="right"><a href="#-table-of-contents">↑ Back to top</a></div>
+
+---
+
+## 🤖 Automated Verification
+
+The "🧪 Verification Commands" checklist above is also automated: [`scripts/verify_lab.py`](./scripts/verify_lab.py) connects to each device over SSH (via [netmiko](https://github.com/ktbyers/netmiko)) and runs the same checks — OSPF adjacency, NAT translations, EtherChannel bundling, ACL presence — reporting pass/fail per device instead of eyeballing each command's output by hand.
+
+```bash
+pip install netmiko pyyaml
+cp scripts/devices.example.yaml scripts/devices.yaml   # fill in real credentials
+python3 scripts/verify_lab.py --inventory scripts/devices.yaml
+```
+
+Written IOS-generically, so it runs unmodified against real hardware, GNS3, or EVE-NG. Reaching this specific topology's simulated devices from outside Packet Tracer needs a Cloud-PT bridge — see [`scripts/README.md`](./scripts/README.md) for the full setup notes and that caveat in detail.
 
 <div align="right"><a href="#-table-of-contents">↑ Back to top</a></div>
 
