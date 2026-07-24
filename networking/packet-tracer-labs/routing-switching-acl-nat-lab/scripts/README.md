@@ -43,6 +43,10 @@ If that's not set up, the practical options are:
   GNS3, EVE-NG, or on physical hardware — that's the scenario it was written for
   first, with Packet Tracer as a secondary target.
 
+## ⚠️ A second caveat: no remote login is configured on the devices yet
+
+Separate from reachability — the devices in this lab currently have `line vty 0 4 / login` with no password source configured at all (no VTY password, no local username, no SSH). That means none of them accept a remote session right now, regardless of what credential you supply. `devices.example.yaml` documents the connection structure this script expects, not a working credential waiting to be filled in — see the comments in that file for what would need to change on the device side before this script (or any remote login) could actually connect.
+
 ## Extending
 
 Each device's checks are defined in the `DEVICE_CHECKS` dict at the top of

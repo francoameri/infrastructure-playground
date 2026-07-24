@@ -212,11 +212,11 @@ The "🧪 Verification Commands" checklist above is also automated: [`scripts/ve
 
 ```bash
 pip install netmiko pyyaml
-cp scripts/devices.example.yaml scripts/devices.yaml   # fill in real credentials
+cp scripts/devices.example.yaml scripts/devices.yaml   # see the file's comments before editing
 python3 scripts/verify_lab.py --inventory scripts/devices.yaml
 ```
 
-Written IOS-generically, so it runs unmodified against real hardware, GNS3, or EVE-NG. Reaching this specific topology's simulated devices from outside Packet Tracer needs a Cloud-PT bridge — see [`scripts/README.md`](./scripts/README.md) for the full setup notes and that caveat in detail.
+Written IOS-generically, so it runs unmodified against real hardware, GNS3, or EVE-NG. Reaching this specific topology's simulated devices from outside Packet Tracer needs a Cloud-PT bridge, and the devices don't have remote login configured yet either — see [`scripts/README.md`](./scripts/README.md) for both caveats in detail.
 
 <div align="right"><a href="#-table-of-contents">↑ Back to top</a></div>
 
