@@ -1,0 +1,244 @@
+# 📊 Executive Summary
+This lab demonstrates **enterprise edge design** with redundancy, segmentation, and policy enforcement.  
+It highlights my ability to **design, document, and reproduce complex networks** using Cisco Packet Tracer, making it valuable for technicians, students, and recruiters alike.
+
+---
+
+# 🧩 Enterprise Network Playground
+
+A reproducible **Cisco Packet Tracer lab** showcasing real-world enterprise edge design:
+
+- 🖧 **VLAN segmentation** (Office & Administration) with trunking
+- 🛣️ **OSPF dynamic routing** inside the LAN (L3SW1, L3SW2, BORDER)
+- 📡 **Static routing** toward ISP1, ISP2, Google, SP2
+- 🔒 **ACLs** applied at the BORDER to enforce access policy
+- 🌐 **NAT** translating internal servers to public IPs
+- ⚙️ **EtherChannel (LACP)** between distribution switches
+- 🗂️ **Sanitized configs & outputs** so you can reproduce the exercises locally
+
+<div align="right"><a href="#-table-of-contents">↑ Back to top</a></div>
+
+---
+
+## 📑 Table of Contents
+- [Who Is This Lab For?](#-who-is-this-lab-for)
+- [Quickstart](#-quickstart)
+- [How to Use This Lab](#-how-to-use-this-lab)
+- [Topology & Networks](#️-topology--networks)
+- [Config Highlights](#️-config-highlights)
+- [Troubleshooting Tips](#-troubleshooting-tips)
+- [Common Misconfigurations & Fixes](#️-common-misconfigurations--fixes)
+- [Learning Outcomes](#-learning-outcomes)
+- [Device Configurations](#-device-configurations)
+- [Automated Verification](#-automated-verification)
+- [About This Lab](#-about-this-lab)
+- [Keywords](#-keywords)
+
+<div align="right"><a href="#-table-of-contents">↑ Back to top</a></div>
+
+---
+
+## 🧭 Who Is This Lab For?
+- Students preparing for CCNA/CCNP exams
+- IT professionals practicing enterprise edge concepts
+- Recruiters/peers evaluating reproducible documentation
+
+<div align="right"><a href="#-table-of-contents">↑ Back to top</a></div>
+
+---
+
+## 🚀 Quickstart
+1. ⬇️ Download and open `pkt/topology.pkt` with Cisco Packet Tracer (recommended: v8.x).  
+   👉 If you don’t have Packet Tracer installed, see [Getting Packet Tracer Guide](../docs/getting-packet-tracer.md).
+2. 📖 Follow the steps in `docs/lab-instructions.md` to run verification commands and tests.
+
+> ✅ Skills demonstrated: VLAN segmentation, dynamic routing (OSPF), static edge routing, ACL policy enforcement, NAT publishing, EtherChannel redundancy, and reproducible documentation.
+
+<div align="right"><a href="#-table-of-contents">↑ Back to top</a></div>
+
+---
+
+## 🧩 How to Use This Lab
+Follow this guided workflow to experience the design in action:
+- Start in VLAN 100 (Office):
+- From a host in 192.168.100.0/24, try to reach the Google server (10.0.0.2).
+- Observe that traffic is blocked by ACLs until NAT is applied.
+- Test NAT Publishing:
+- Access the Office Webserver at its public IP 172.0.0.2.
+- Verify translation with show ip nat translations on the BORDER router.
+- Check OSPF Adjacencies:
+- Run show ip ospf neighbor on L3SW1/L3SW2 to confirm adjacency with BORDER.
+- Use show ip route to see VLAN networks redistributed into OSPF.
+- Simulate ISP Redundancy:
+- Shut down one ISP2 link (e.g., shutdown on 172.0.0.4/30).
+- Run traceroute 10.0.0.2 to confirm traffic reroutes via the second ISP2 path.
+- Verify EtherChannel Resilience:
+- Disable one physical link (Fa0/1 or Fa0/2) between L3SW1 and L3SW2.
+- Run show etherchannel summary to confirm the Port‑Channel remains active.
+
+<div align="right"><a href="#-table-of-contents">↑ Back to top</a></div>
+
+---
+
+## 🗺️ Topology & Networks
+
+![PKTTopology](./images/Preview.png)
+
+- **Network A (Office):** 192.168.100.0/24 (VLAN 100)
+- **Network B (Administration):** 192.168.200.0/24 (VLAN 200)
+- **L3SW2 ↔ BORDER:** 100.100.0.0/30
+- **L3SW1 ↔ BORDER:** 100.200.0.0/30
+- **BORDER ↔ ISP1:** 172.0.0.0/30
+- **ISP2 ↔ Google:** 172.0.0.4/30, 172.0.0.8/30
+- **BORDER ↔ SP2:** 172.0.0.12/30
+- **Google Server:** 10.0.0.0/30
+
+```plaintext
+
+[Admini VLAN 200]---L3SW1---\
+                             BORDER---ISP1---Google---ServerPT
+[Office VLAN 100]---L3SW2---/        \                 /
+                                   ISP2---Google-------
+```
+
+<div align="right"><a href="#-table-of-contents">↑ Back to top</a></div>
+
+---
+
+## ⚙️ Config Highlights
+
+### OSPF (Internal)
+- OSPF runs between L3SW1, L3SW2, BORDER.
+- VLAN networks (A & B) are redistributed into OSPF.
+- BORDER originates default route toward ISPs.
+
+### Static Routing (Edge to ISPs/Google)
+- **Purpose:** Simulates redundant ISP2 paths toward Google.
+- **Design:** Static routes point to next‑hop addresses for load‑sharing or failover testing.
+
+### ACLs (Border Router)
+- **ACL 100 (G0/0):** Blocks Office VLAN (192.168.100.0/24) and transit link (100.100.0.0/30) from leaking out.
+- **ACL 200 (G0/1):** Blocks Administration VLAN (192.168.200.0/24) and transit link (100.200.0.0/30).
+- **Policy Goal:** Prevent internal addressing from being routed externally, while still allowing NAT‑translated traffic.
+
+### NAT (Static)
+- **Inside Local:** 192.168.100.10 (Office Webserver in VLAN 100)
+- **Inside Global:** 172.0.0.2 (Public IP advertised to ISPs)
+
+This static NAT entry ensures the internal webserver is reachable from the outside world using its public IP.
+
+### VLANs & Trunking
+- OSPF runs between L3SW1, L3SW2, BORDER.
+- VLAN networks (A & B) are redistributed into OSPF.
+- BORDER originates default route toward ISPs.
+
+### EtherChannel (LACP)
+- Combines multiple physical links (Fa0/1, Fa0/2) into a single logical Port‑Channel.
+- Provides higher aggregate bandwidth between distribution switches.
+- Ensures redundancy — if one link fails, traffic continues over the remaining link(s).
+- Acts as the trunk backbone carrying VLAN 100 (Office) and VLAN 200 (Administration) between L3SW1 and L3SW2.
+- Improves stability and throughput for inter‑VLAN routing and OSPF adjacency.
+- Simplifies management: the two physical interfaces are treated as one logical interface (Po1).
+
+🧪 Verification Commands
+```
+- ping 10.0.0.2 → reach Google server from Office or Administration VLAN
+- show ip ospf neighbor → confirm adjacency between BORDER, L3SW1, L3SW2
+- show ip route → check static + OSPF routes
+- show access-lists → confirm ACL hits
+- show etherchannel summary → verify LACP bundle
+- show ip nat translations → confirm NAT mappings.
+- traceroute 10.0.0.2 → verify static route path via ISP2.
+- show spanning-tree → confirm VLAN trunk stability
+```
+
+<div align="right"><a href="#-table-of-contents">↑ Back to top</a></div>
+
+---
+
+## 🔍 Troubleshooting Tips
+- Use `show ip nat translations` to confirm webserver mapping
+- Shut down Fa0/1 on L3SW2 and run `ping` to test EtherChannel redundancy
+- Clear NAT with `clear ip nat translations *` and retest connectivity
+
+<div align="right"><a href="#-table-of-contents">↑ Back to top</a></div>
+
+---
+
+## 🛠️ Common Misconfigurations & Fixes
+- OSPF adjacency fails → check network statements and interface IPs.
+- EtherChannel down → confirm both sides use LACP mode and matching configs.
+- NAT not translating → verify ACLs permit traffic and inside/outside interfaces are set correctly.
+- ACL blocking too much → adjust sequence numbers and confirm applied direction.
+
+<div align="right"><a href="#-table-of-contents">↑ Back to top</a></div>
+
+---
+
+## 🎯 Learning Outcomes
+- Practice edge ACL design to block RFC1918 leakage
+- Configure static NAT for internal webserver publishing
+- Observe OSPF adjacencies across distribution and border
+- Test static routing toward multiple ISPs with redundancy
+
+> 🎯 Transferable Skills: This lab demonstrates my ability to **design resilient enterprise networks, enforce edge security, and document reproducible labs** — directly applicable to infrastructure engineering and architect roles.
+
+<div align="right"><a href="#-table-of-contents">↑ Back to top</a></div>
+
+---
+
+## 📂 Device Configurations
+
+Full sanitized configs for each device are available in the [configs folder](./configs/).
+
+- [SW1](./configs/SW1.cfg)
+- [SW2](./configs/SW2.cfg)
+- [BORDER Router](./configs/BORDER.cfg)
+- [L3SW1](./configs/L3SW1.cfg)
+- [L3SW2](./configs/L3SW2.cfg)
+- [ISP1](./configs/ISP1.cfg)
+- [ISP2](./configs/ISP2.cfg)
+- [Google Server](./configs/GOOGLE.cfg)
+
+Each file contains the output of `show running-config` plus role notes (interfaces, routing, ACLs, NAT, etc.). Use these configs to reproduce the lab or compare against your own Packet Tracer setup.
+
+<div align="right"><a href="#-table-of-contents">↑ Back to top</a></div>
+
+---
+
+## 🤖 Automated Verification
+
+The "🧪 Verification Commands" checklist above is also automated: [`scripts/verify_lab.py`](./scripts/verify_lab.py) connects to each device over SSH (via [netmiko](https://github.com/ktbyers/netmiko)) and runs the same checks — OSPF adjacency, NAT translations, EtherChannel bundling, ACL presence — reporting pass/fail per device instead of eyeballing each command's output by hand.
+
+```bash
+pip install netmiko pyyaml
+cp scripts/devices.example.yaml scripts/devices.yaml   # fill in real credentials
+python3 scripts/verify_lab.py --inventory scripts/devices.yaml
+```
+
+Written IOS-generically, so it runs unmodified against real hardware, GNS3, or EVE-NG. Reaching this specific topology's simulated devices from outside Packet Tracer needs a Cloud-PT bridge — see [`scripts/README.md`](./scripts/README.md) for the full setup notes and that caveat in detail.
+
+<div align="right"><a href="#-table-of-contents">↑ Back to top</a></div>
+
+---
+
+## 📢 About This Lab
+This enterprise edge lab is part of my **Infrastructure Improvement Portfolio**, showcasing reproducible, real-world scenarios.  
+It is intended for technicians practicing advanced concepts, students preparing for CCNA/CCNP, and recruiters evaluating **architect-level design and documentation skills**.  
+By combining VLAN segmentation, OSPF, ACLs, NAT, and EtherChannel, this lab demonstrates how to build **resilient, scalable, and secure enterprise networks**.
+
+<div align="right"><a href="#-table-of-contents">↑ Back to top</a></div>
+
+---
+
+## 🔑 Keywords
+
+`Cisco Packet Tracer` · `VLAN Segmentation` · `OSPF Dynamic Routing` · `Static Routing` · `Access Control Lists (ACLs)` · `Network Address Translation (NAT)` · `EtherChannel (LACP)` · `Enterprise Edge Design` · `ISP Redundancy` · `Network Troubleshooting` · `CCNA/CCNP Lab Practice` · `Reproducible Configurations` · `Infrastructure Documentation` · `Scalable Network Architecture`
+
+<div align="right"><a href="#-table-of-contents">↑ Back to top</a></div>
+
+---
+
+✍️ Authored by **Franco [francoameri]**
+📜 Licensed under [CC BY 4.0](https://github.com/francoameri/francoameri/blob/main/LICENSE.md)
+Please credit the original author when sharing or adapting this work.

@@ -1,0 +1,39 @@
+# Copy this to devices.yaml and fill in real credentials/addresses.
+# Never commit devices.yaml with real passwords -- keep it out of git
+# (add "devices.yaml" to .gitignore) and use devices.example.yaml as the
+# checked-in reference for the expected structure.
+#
+# Only include the devices you can actually reach -- you don't need all 8
+# for a partial check (see --device to target just one).
+
+devices:
+  BORDER:
+    device_type: cisco_ios
+    host: 100.100.0.1
+    username: admin
+    password: CHANGE_ME
+    secret: CHANGE_ME        # enable password, if required
+
+  L3SW1:
+    device_type: cisco_ios
+    host: 100.200.0.2
+    username: admin
+    password: CHANGE_ME
+
+  L3SW2:
+    device_type: cisco_ios
+    host: 100.100.0.2
+    username: admin
+    password: CHANGE_ME
+
+  SW1:
+    device_type: cisco_ios
+    host: 192.168.100.2
+    username: admin
+    password: CHANGE_ME
+
+  SW2:
+    device_type: cisco_ios
+    host: 192.168.200.2
+    username: admin
+    password: CHANGE_ME
