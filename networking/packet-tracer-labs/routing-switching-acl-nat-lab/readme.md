@@ -216,7 +216,7 @@ By combining VLAN segmentation, OSPF, ACLs, NAT, and EtherChannel, this lab demo
 
 ## 🔑 Keywords
 
-> Cisco Packet Tracer, VLAN Segmentation, OSPF Dynamic Routing, Static Routing, Access Control Lists (ACLs), Network Address Translation (NAT), EtherChannel (LACP), Enterprise Edge Design, ISP Redundancy, Network Troubleshooting, CCNA/CCNP Lab Practice, Reproducible Configurations, Infrastructure Documentation, Scalable Network Architecture
+`Cisco Packet Tracer` · `VLAN Segmentation` · `OSPF Dynamic Routing` · `Static Routing` · `Access Control Lists (ACLs)` · `Network Address Translation (NAT)` · `EtherChannel (LACP)` · `Enterprise Edge Design` · `ISP Redundancy` · `Network Troubleshooting` · `CCNA/CCNP Lab Practice` · `Reproducible Configurations` · `Infrastructure Documentation` · `Scalable Network Architecture`
 
 <div align="right"><a href="#-table-of-contents">↑ Back to top</a></div>
 

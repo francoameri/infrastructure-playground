@@ -61,7 +61,7 @@ I’ll be glad to help troubleshoot or point you in the right direction.
 
 ## 🔑 Keywords
 
-> Cisco Packet Tracer, CCNA Practice, CCNP Lab, Network Simulation, VLAN, OSPF, ACL, NAT, EtherChannel, Enterprise Edge Design, Infrastructure Training, Reproducible Labs
+`Cisco Packet Tracer` · `CCNA Practice` · `CCNP Lab` · `Network Simulation` · `VLAN` · `OSPF` · `ACL` · `NAT` · `EtherChannel` · `Enterprise Edge Design` · `Infrastructure Training` · `Reproducible Labs`
 
 ---
 
